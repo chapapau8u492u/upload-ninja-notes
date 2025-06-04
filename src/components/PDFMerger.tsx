@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { FileText, Download, Plus, X, Merge } from "lucide-react";
-import PDFMerger from "pdf-merger-js/browser";
+import PDFMergerLib from "pdf-merger-js/browser";
 
 interface SelectedFile {
   file: File;
@@ -60,7 +60,7 @@ export const PDFMerger = () => {
     try {
       setIsMerging(true);
       
-      const merger = new PDFMerger();
+      const merger = new PDFMergerLib();
 
       // Add each file to the merger
       for (const selectedFile of selectedFiles) {

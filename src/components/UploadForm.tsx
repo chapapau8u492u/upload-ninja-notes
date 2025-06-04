@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -92,7 +91,9 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       setSelectedFile(files[0]);
-      form.setValue("file", files as unknown as FileList);
+      // Create a new FileList-like object for the form
+      const fileList = files;
+      form.setValue("file", fileList);
     } else {
       setSelectedFile(null);
     }

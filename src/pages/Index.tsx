@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { NoteCard } from "@/components/NoteCard";
 import { fetchNotes } from "@/lib/api";
 import { NoteWithDetails } from "@/types";
-import { FileText, Search, Upload } from "lucide-react";
+import { FileText, Search, Upload, Merge, Split } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 
@@ -64,19 +63,69 @@ const Index = () => {
             Notes Sharing
           </Link>
           
-          <Button 
-            onClick={() => navigate("/upload")}
-            className="flex items-center gap-2"
-          >
-            <Upload className="h-4 w-4" />
-            Upload Note
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              onClick={() => navigate("/pdf-merge")}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <Merge className="h-4 w-4" />
+              PDF Merge
+            </Button>
+            <Button 
+              onClick={() => navigate("/pdf-split")}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <Split className="h-4 w-4" />
+              PDF Split
+            </Button>
+            <Button 
+              onClick={() => navigate("/upload")}
+              className="flex items-center gap-2"
+            >
+              <Upload className="h-4 w-4" />
+              Upload Note
+            </Button>
+          </div>
         </div>
       </header>
       
       <main className="container py-8 max-w-6xl">
         <section className="mb-8">
           <h1 className="text-3xl font-bold mb-4">Find and Share Notes</h1>
+          <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                <Upload className="h-5 w-5" />
+                Upload Notes
+              </h3>
+              <p className="text-gray-600 mb-4">Share your notes with others by uploading documents</p>
+              <Button onClick={() => navigate("/upload")} className="w-full">
+                Upload Note
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                <Merge className="h-5 w-5" />
+                PDF Merge
+              </h3>
+              <p className="text-gray-600 mb-4">Combine multiple PDF files into a single document</p>
+              <Button onClick={() => navigate("/pdf-merge")} variant="outline" className="w-full">
+                Merge PDFs
+              </Button>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                <Split className="h-5 w-5" />
+                PDF Split
+              </h3>
+              <p className="text-gray-600 mb-4">Split PDF files into smaller documents by page ranges</p>
+              <Button onClick={() => navigate("/pdf-split")} variant="outline" className="w-full">
+                Split PDFs
+              </Button>
+            </div>
+          </div>
           <form onSubmit={handleSearch} className="flex gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />

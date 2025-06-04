@@ -58,10 +58,11 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
         setUploadProgress(progress);
       };
       
+      // The Zod schema already transforms FileList to File, so data.file is now of type File
       await uploadNote(
         data.title,
         "", // Empty description
-        data.file,
+        data.file, // This is now properly typed as File
         null, // No user ID needed anymore
         trackProgress // Pass the progress tracker
       );

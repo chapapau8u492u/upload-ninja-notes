@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,11 +58,11 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
         setUploadProgress(progress);
       };
       
-      // The Zod schema already transforms FileList to File, so data.file is now of type File
+      // data.file is now properly typed as File after Zod transformation
       await uploadNote(
         data.title,
         "", // Empty description
-        data.file, // This is now properly typed as File
+        data.file, // This is properly typed as File
         null, // No user ID needed anymore
         trackProgress // Pass the progress tracker
       );
@@ -91,9 +92,8 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       setSelectedFile(files[0]);
-      // Create a new FileList-like object for the form
-      const fileList = files;
-      form.setValue("file", fileList);
+      // Set the FileList directly to the form
+      form.setValue("file", files);
     } else {
       setSelectedFile(null);
     }

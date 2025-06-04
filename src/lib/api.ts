@@ -36,7 +36,7 @@ export async function fetchNotes(searchQuery?: string): Promise<NoteWithDetails[
   });
 }
 
-export async function getUserRating(noteId: string, userId: string): Promise<number | null> {
+export async function getUserRating(noteId: string, userId: string | null): Promise<number | null> {
   if (!userId) return null;
   
   const { data, error } = await supabase
@@ -59,7 +59,7 @@ export async function getUserRating(noteId: string, userId: string): Promise<num
 
 export async function rateNote(
   noteId: string,
-  userId: string,
+  userId: string | null,
   rating: number
 ): Promise<void> {
   if (!userId) {

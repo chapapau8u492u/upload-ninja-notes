@@ -7,9 +7,9 @@ export interface Note {
   file_name: string;
   file_type: string;
   file_size: string;
-  uploader_id: string;
+  uploader_id: string | null;
   created_at: string;
-  updated_at: string;
+  updated_at: string | null;
 }
 
 export interface Profile {

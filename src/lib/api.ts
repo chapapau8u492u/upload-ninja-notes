@@ -1,7 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { Note, NoteWithDetails, Rating } from "@/types";
-import { Database } from "@/integrations/supabase/types";
 
 export async function fetchNotes(searchQuery?: string): Promise<NoteWithDetails[]> {
   let query = supabase
@@ -112,22 +111,26 @@ export async function uploadNote(
   const folderName = userId || 'anonymous';
   const filePath = `${folderName}/${fileName}`;
 
-  // 1. Upload the file to storage with progress tracking
+  // 1. Upload the file to storage
   const { error: uploadError, data } = await supabase.storage
     .from("notes")
-    .upload(filePath, file, {
-      onUploadProgress: (progress) => {
-        // Calculate percentage
-        const percent = Math.round((progress.loaded / progress.totalBytes) * 100);
-        if (onProgress) {
-          onProgress(percent);
-        }
-      },
-    });
+    .upload(filePath, file);
 
   if (uploadError) {
     console.error("Error uploading file:", uploadError);
     throw uploadError;
+  }
+
+  // Simulate progress since Supabase doesn't provide upload progress
+  if (onProgress) {
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      onProgress(progress);
+      if (progress >= 100) {
+        clearInterval(interval);
+      }
+    }, 100);
   }
 
   // Get the public URL of the uploaded file

@@ -19,7 +19,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useAuth } from "@/context/AuthContext";
 
 interface NoteCardProps {
   note: NoteWithDetails;
@@ -29,11 +28,8 @@ interface NoteCardProps {
 
 export const NoteCard = ({ note, onDelete, showRatingInteraction = false }: NoteCardProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
-  const { user } = useAuth();
   const [ratingUpdated, setRatingUpdated] = useState(false);
   
-  // Since uploader_id is now nullable, we need to check if it exists
-  const isOwner = note.uploader_id === user?.id;
   const fileUrl = note.file_url;
   
   const handleDownload = () => {
@@ -55,8 +51,6 @@ export const NoteCard = ({ note, onDelete, showRatingInteraction = false }: Note
   };
   
   const handleDelete = async () => {
-    if (!isOwner) return;
-    
     try {
       setIsDeleting(true);
       await deleteNote(note);

@@ -53,9 +53,6 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
       setIsUploading(true);
       setUploadProgress(0);
       
-      // Create custom upload function with progress tracking
-      const fileToUpload: File = data.file;
-      
       // Custom progress tracker
       const trackProgress = (progress: number) => {
         setUploadProgress(progress);
@@ -64,7 +61,7 @@ export const UploadForm = ({ onSuccess }: UploadFormProps) => {
       await uploadNote(
         data.title,
         "", // Empty description
-        fileToUpload,
+        data.file,
         null, // No user ID needed anymore
         trackProgress // Pass the progress tracker
       );
